@@ -1,0 +1,3 @@
+C:/Git/geomtry-figure-raster-graphic/cmake-build-debug/CMakeFiles/geomtry_figure_raster_graphic.dir
+C:/Git/geomtry-figure-raster-graphic/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Git/geomtry-figure-raster-graphic/cmake-build-debug/CMakeFiles/rebuild_cache.dir
