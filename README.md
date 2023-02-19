@@ -1,0 +1,1 @@
+# geomtry-figure-raster-graphic
