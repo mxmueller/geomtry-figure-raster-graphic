@@ -1,18 +1,33 @@
 #include <stdio.h>
 #include <math.h>
+#define PI 3.14159265358979323846
 
-// TODO: make filename a global scope, but with timestamp or sth each time
+// TODO: #1 Function that accepts two points A(x1, y1) and B(x2, y2)
+// TODO: #2 Find all the intermediate points required for drawing line AB
 
-int ini_ppm();
-void set_pixel(int x, int y);
+// Input  : A(0,0), B(4,4)
+// Output : (0,0), (1,1), (2,2), (3,3), (4,4)
 
-int main(void) {
-    ini_ppm();
+// Input  : A(0,0), B(4,2)
+// Output : (0,0), (1,0), (2,1), (3,1), (4,2)
 
-    int x1 = 100;
-    int y1 = 100;
-    int x2 = 700;
-    int y2 = 700;
+#define ROWS 20
+#define COLS 20
+
+char arr[ROWS][COLS];
+
+void initialize_array();
+void print_array();
+void change_coordinate();
+void plotPixel(int x1, int y1, int x2, int y2, int dx, int dy, int decide);
+
+int main() {
+    initialize_array();
+
+    int x1 = 2;
+    int y1 = 2;
+    int x2 = 18;
+    int y2 = 18;
 
     int dx = abs(x2 - x1);
     int dy = abs(y2 - y1);
@@ -28,26 +43,43 @@ int main(void) {
         plotPixel(y1, x1, y2, x2, dy, dx, 1);
     }
 
+
+    print_array();
     return 0;
 }
 
-int ini_ppm() {
-    const int dimx = 800, dimy = 800;
+// * From point A(x1, y1) to point B(x2, y2) *
+int bresenhams_algorithm(int x1, int x2, int y1, int y2) {
+
+}
+
+void initialize_array() {
     int i, j;
-    FILE *fp = fopen("../first.ppm", "wb"); /* b - binary mode */
-    (void) fprintf(fp, "P6\n%d %d\n255\n", dimx, dimy);
-    (void) fclose(fp);
-    return 0;
+
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            if (i == 0 || i == ROWS - 1 || j == 0 || j == COLS - 1) {
+                arr[i][j] = '+'; // ! Border could be implemented here
+            } else {
+                arr[i][j] = '+';
+            }
+        }
+    }
 }
 
-void set_pixel(int x, int y) {
-    const int dimx = 800;
-    FILE *fp = fopen("../first.ppm", "r+b"); /* r+b - read and write in binary mode */
-    fseek(fp, (long)(y*dimx + x)*3, SEEK_SET); // Move file pointer to position of pixel (x, y)
-    fputc(255, fp);
-    fputc(0, fp);
-    fputc(0, fp);
-    fclose(fp);
+void print_array() {
+    int i, j;
+
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%c ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void change_coordinate(int x1, int y1) {
+    arr[x1][y1] = '#';
 }
 
 void plotPixel(int x1, int y1, int x2, int y2, int dx, int dy, int decide){
@@ -59,8 +91,8 @@ void plotPixel(int x1, int y1, int x2, int y2, int dx, int dy, int decide){
 
     for (int i = 0; i <= dx; i++) {
         printf("%d,%d\n", x1, y1);
+        change_coordinate(x1,y1);
 
-        set_pixel(x1, y1);
 
         // checking either to decrement or increment the
         // value if we have to plot from (0,100) to (100,0)
@@ -97,6 +129,3 @@ void plotPixel(int x1, int y1, int x2, int y2, int dx, int dy, int decide){
         }
     }
 }
-
-
-
