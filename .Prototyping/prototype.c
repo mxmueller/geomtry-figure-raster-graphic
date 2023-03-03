@@ -75,3 +75,14 @@ int main(){
     closegraph();
     return 0;
 }
+
+
+for (int i = 0; i < num_points - 1; i++) {
+Point p1 = points[i];
+Point p2 = points[i+1];
+bresenham_line(p1.x, p1.y, p2.x, p2.y);
+}
+// Connect last point with first point
+Point p1 = points[num_points-1];
+Point p2 = points[0];
+bresenham_line(p1.x, p1.y, p2.x, p2.y);
